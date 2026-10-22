@@ -12,6 +12,8 @@ interface Outcome {
     description: string
 }
 
+const quizTitle = 'Which song in the playlist are you?'
+
 const question: Question = {
     text: 'You suddenly have a free evening. What will you choose?',
     choices: [
@@ -43,9 +45,10 @@ const outcome: Outcome = {
 const answer = 1
 const picked = question.choices[answer]
 
+console.log(`Welcome to the quiz: ${quizTitle}\n`)
+
 console.log(question.text)
-console.log(`You chose "${picked.label}" (${picked.points} points)`)
-console.log('\n')
+console.log(`You chose "${picked.label}" (${picked.points} points)\n`)
 
 console.log('Your results are ready!')
 console.log(`You are a ${outcome.title}`)
