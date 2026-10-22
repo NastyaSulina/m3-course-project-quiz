@@ -7,6 +7,10 @@ interface Question {
     text: string
     choices: Choice[]
 }
+interface Outcome {
+    title: string
+    description: string
+}
 
 const question: Question = {
     text: 'You suddenly have a free evening. What will you choose?',
@@ -30,8 +34,19 @@ const question: Question = {
     ],
 }
 
+const outcome: Outcome = {
+    title: 'comfort song',
+    description:
+        'A song for any mood. You could listen to it a hundred times over, and it would never get old...',
+}
+
 const answer = 1
 const picked = question.choices[answer]
 
 console.warn(question.text)
-console.warn(`You chose ${picked.label} (${picked.points} points)`)
+console.warn(`You chose "${picked.label}" (${picked.points} points)`)
+console.warn('\n')
+
+console.warn('Your results are ready!')
+console.warn(`You are a ${outcome.title}`)
+console.warn(`Description: ${outcome.description}`)
