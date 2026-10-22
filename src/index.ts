@@ -43,10 +43,10 @@ const outcome: Outcome = {
 const answer = 1
 const picked = question.choices[answer]
 
-console.warn(question.text)
-console.warn(`You chose "${picked.label}" (${picked.points} points)`)
-console.warn('\n')
+console.log(question.text)
+console.log(`You chose "${picked.label}" (${picked.points} points)`)
+console.log('\n')
 
-console.warn('Your results are ready!')
-console.warn(`You are a ${outcome.title}`)
-console.warn(`Description: ${outcome.description}`)
+console.log('Your results are ready!')
+console.log(`You are a ${outcome.title}`)
+console.log(`Description: ${outcome.description}`)
