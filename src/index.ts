@@ -51,5 +51,5 @@ console.log(question.text)
 console.log(`You chose "${picked.label}" (${picked.points} points)\n`)
 
 console.log('Your results are ready!')
-console.log(`You are a ${outcome.title}`)
-console.log(`Description: ${outcome.description}`)
+console.log(`You are a ${outcome.title}
+${outcome.description}`)
