@@ -4,7 +4,7 @@ export const QUIZ_TITLE = 'Which song in the playlist are you?'
 
 export const questions: Question[] = [
     {
-        text: 'You suddenly have a free evening. What will you choose?',
+        text: 'You suddenly have a free evening. What do you do?',
         kind: QuestionKind.choice,
         choices: [
             {
@@ -48,18 +48,20 @@ export const questions: Question[] = [
         ],
     },
     {
-        text: 'Do you have a favorite mug that no one else is allowed to use?',
+        text: 'Do you enjoy a little drama in your life?',
         kind: QuestionKind.yesno,
     },
     {
-        text: 'Would you go to the cinema alone?',
-        kind: QuestionKind.yesno,
-    },
-    {
-        text: 'How comfortable do you feel dining alone at a restaurant?',
+        text: 'How much do you like spontaneous plans?',
         kind: QuestionKind.scale,
-        low: 'very uncomfortable',
-        high: 'very comfortable',
+        low: 'I need a schedule',
+        high: 'I am already on my way',
+    },
+    {
+        text: 'How badly do you need a new iPhone?',
+        kind: QuestionKind.scale,
+        low: 'I actually love my ancient phone',
+        high: 'I already have it in my cart',
     },
 ]
 
