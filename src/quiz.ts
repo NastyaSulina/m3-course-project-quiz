@@ -10,23 +10,7 @@ export function show(question: Question): string {
     }
 
     if (question.kind === QuestionKind.scale) {
-        return `${question.text}\n0 = ${question.low}\n3 = ${question.high}`
-    }
-
-    throw new Error('Unknown kind')
-}
-
-export function award(answer: Answer): number {
-    if (answer.kind === QuestionKind.choice) {
-        return answer.picked.points
-    }
-
-    if (answer.kind === QuestionKind.scale) {
-        return answer.value
-    }
-
-    if (answer.kind === QuestionKind.yesno) {
-        return answer.value ? 3 : 0
+        return `${question.text}\n0 = ${question.low}\n2 = ${question.high}`
     }
 
     throw new Error('Unknown kind')
@@ -42,7 +26,7 @@ export function recap(question: Question, answer: Answer): string {
     }
 
     if (answer.kind === QuestionKind.scale) {
-        return `You rated it ${answer.value} out of 3.`
+        return `You rated it ${answer.value} out of 2.`
     }
 
     if (answer.kind === QuestionKind.yesno) {

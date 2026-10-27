@@ -1,6 +1,20 @@
+export enum OutcomeId {
+    underground = 'underground',
+    comfort = 'comfort',
+    hit = 'hit',
+    party = 'party',
+}
+
+export interface Outcome {
+    id: OutcomeId
+    title: string
+    description: string
+}
+
 interface Choice {
     label: string
     points: number
+    outcome: OutcomeId
 }
 
 export enum QuestionKind {
@@ -20,20 +34,17 @@ interface ChoiceQuestion extends BaseQuestion {
 
 interface YesNoQuestion extends BaseQuestion {
     kind: QuestionKind.yesno
+    outcome: OutcomeId
 }
 
 interface ScaleQuestion extends BaseQuestion {
     kind: QuestionKind.scale
     low: string
     high: string
+    outcome: OutcomeId
 }
 
 export type Question = ChoiceQuestion | ScaleQuestion | YesNoQuestion
-
-export interface Outcome {
-    title: string
-    description: string
-}
 
 interface ChoiceAnswer {
     kind: QuestionKind.choice

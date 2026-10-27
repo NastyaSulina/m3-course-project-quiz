@@ -1,0 +1,103 @@
+import { OutcomeId, QuestionKind, type Answer, type Outcome, type Question } from './types.ts'
+
+enum SessionStatus {
+    waiting = 'waiting',
+    asking = 'asking',
+    done = 'done',
+}
+
+interface Award {
+    outcome: OutcomeId
+    points: number
+}
+
+class SessionError extends Error {
+    constructor(message: string, sessionStatus: SessionStatus) {
+        super(`${message}. Current status: ${sessionStatus}`)
+        this.name = 'SessionError'
+    }
+}
+
+export class Session {
+    private scores: Record<OutcomeId, number> = {
+        [OutcomeId.underground]: 0,
+        [OutcomeId.comfort]: 0,
+        [OutcomeId.hit]: 0,
+        [OutcomeId.party]: 0,
+    }
+
+    private outcomes: Outcome[]
+    private status: SessionStatus = SessionStatus.waiting
+
+    constructor(outcomes: Outcome[]) {
+        this.outcomes = outcomes
+    }
+
+    public start(): void {
+        if (this.status !== SessionStatus.waiting) {
+            throw new SessionError('The quiz has already started', this.status)
+        }
+
+        this.status = SessionStatus.asking
+    }
+
+    public record(question: Question, answer: Answer): Award {
+        if (this.status !== SessionStatus.asking) {
+            throw new SessionError('Cannot record an answer', this.status)
+        }
+
+        const { outcome, points } = award(question, answer)
+
+        this.scores[outcome] += points
+
+        return { outcome, points }
+    }
+
+    public finish(): void {
+        if (this.status !== SessionStatus.asking) {
+            throw new SessionError('Cannot finish the quiz', this.status)
+        }
+
+        if (!Object.values(this.scores).some((value) => value > 0)) {
+            throw new Error('No points have been scored')
+        }
+
+        this.status = SessionStatus.done
+    }
+
+    public result(): Outcome {
+        if (this.status !== SessionStatus.done) {
+            throw new SessionError('Cannot get the result', this.status)
+        }
+
+        let best = this.outcomes[0]
+
+        for (const outcome of this.outcomes) {
+            if (this.scores[outcome.id] > this.scores[best.id]) {
+                best = outcome
+            }
+        }
+
+        return best
+    }
+}
+
+function award(question: Question, answer: Answer): Award {
+    if (question.kind !== answer.kind) {
+        throw new Error('The answer does not match the question')
+    }
+
+    if (question.kind === QuestionKind.choice && answer.kind === QuestionKind.choice) {
+        return { outcome: answer.picked.outcome, points: answer.picked.points }
+    }
+
+    if (question.kind === QuestionKind.scale && answer.kind === QuestionKind.scale) {
+        return { outcome: question.outcome, points: answer.value }
+    }
+
+    if (question.kind === QuestionKind.yesno && answer.kind === QuestionKind.yesno) {
+        return { outcome: question.outcome, points: answer.value ? 2 : 0 }
+    }
+
+    throw new Error('Unknown kind')
+}
