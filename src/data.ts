@@ -1,4 +1,4 @@
-import { OutcomeId, QuestionKind, type Outcome, type Question } from './types.ts'
+import { OutcomeId, QuestionKind, type Outcome, type Question } from './lib/types.ts'
 
 export const QUIZ_TITLE = 'Which song in the playlist are you?'
 

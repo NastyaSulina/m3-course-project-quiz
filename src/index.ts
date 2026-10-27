@@ -1,7 +1,7 @@
 import { outcomes, questions, QUIZ_TITLE } from './data.ts'
-import { show } from './quiz.ts'
-import { Session } from './session.ts'
-import { OutcomeId, QuestionKind, type Answer } from './types.ts'
+import { show } from './lib/quiz.ts'
+import { Session } from './lib/session.ts'
+import { OutcomeId, QuestionKind, type Answer } from './lib/types.ts'
 
 const answers: Answer[] = [
     {
