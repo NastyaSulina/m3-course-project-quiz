@@ -1,5 +1,5 @@
 import { outcomes, questions, QUIZ_TITLE } from './data.ts'
-import { recap, show } from './quiz.ts'
+import { show } from './quiz.ts'
 import { Session } from './session.ts'
 import { OutcomeId, QuestionKind, type Answer } from './types.ts'
 
@@ -49,11 +49,12 @@ for (const [index, question] of questions.entries()) {
 session.finish()
 const result = session.result()
 
-console.log('\nYour answers:\n')
-
-for (const [index, question] of questions.entries()) {
-    console.log(`${index + 1}. ${recap(question, answers[index])}`)
-}
-
 console.log(`\nYou are: ${result.title}`)
 console.log(result.description)
+
+console.log('\nYou got this because:')
+
+const reasons = session.explain()
+for (const reason of reasons) {
+    console.log(`— ${reason}`)
+}

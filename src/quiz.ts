@@ -22,15 +22,15 @@ export function recap(question: Question, answer: Answer): string {
     }
 
     if (answer.kind === QuestionKind.choice) {
-        return `You chose "${answer.picked.label}".`
+        return `${question.text} You chose "${answer.picked.label}".`
     }
 
     if (answer.kind === QuestionKind.scale) {
-        return `You rated it ${answer.value} out of 2.`
+        return `${question.text} You rated it ${answer.value} out of 2.`
     }
 
     if (answer.kind === QuestionKind.yesno) {
-        return `You said "${answer.value ? 'yes' : 'no'}".`
+        return `${question.text} You said "${answer.value ? 'yes' : 'no'}".`
     }
 
     throw new Error('Unknown kind')

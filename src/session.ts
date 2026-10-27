@@ -1,4 +1,5 @@
 import { OutcomeId, QuestionKind, type Answer, type Outcome, type Question } from './types.ts'
+import { recap } from './quiz.ts'
 
 enum SessionStatus {
     waiting = 'waiting',
@@ -25,6 +26,12 @@ export class Session {
         [OutcomeId.hit]: 0,
         [OutcomeId.party]: 0,
     }
+    private reasons: Record<OutcomeId, string[]> = {
+        [OutcomeId.underground]: [],
+        [OutcomeId.comfort]: [],
+        [OutcomeId.hit]: [],
+        [OutcomeId.party]: [],
+    }
 
     private outcomes: Outcome[]
     private status: SessionStatus = SessionStatus.waiting
@@ -48,7 +55,11 @@ export class Session {
 
         const { outcome, points } = award(question, answer)
 
-        this.scores[outcome] += points
+        if (points > 0) {
+            this.scores[outcome] += points
+
+            this.reasons[outcome].push(recap(question, answer))
+        }
 
         return { outcome, points }
     }
@@ -79,6 +90,16 @@ export class Session {
         }
 
         return best
+    }
+
+    public explain(): string[] {
+        if (this.status !== SessionStatus.done) {
+            throw new SessionError('Cannot get the explanation', this.status)
+        }
+
+        const best = this.result()
+
+        return [...this.reasons[best.id]]
     }
 }
 
