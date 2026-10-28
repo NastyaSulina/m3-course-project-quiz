@@ -1,3 +1,13 @@
+export interface Quiz {
+    outcomes: Outcome[]
+    questions: Question[]
+}
+
+export interface Settings {
+    name: string
+    hints?: boolean
+}
+
 export enum OutcomeId {
     underground = 'underground',
     comfort = 'comfort',
@@ -11,7 +21,7 @@ export interface Outcome {
     description: string
 }
 
-interface Choice {
+export interface Choice {
     label: string
     points: number
     outcome: OutcomeId
@@ -25,6 +35,7 @@ export enum QuestionKind {
 
 interface BaseQuestion {
     text: string
+    hint?: string
 }
 
 interface ChoiceQuestion extends BaseQuestion {

@@ -1,45 +1,24 @@
-import { outcomes, questions, QUIZ_TITLE } from './data.ts'
+import { quiz, QUIZ_TITLE } from './data.ts'
+import { loadSavedGame, loadSettings } from './lib/load.ts'
 import { show } from './lib/quiz.ts'
 import { Session } from './lib/session.ts'
-import { OutcomeId, QuestionKind, type Answer } from './lib/types.ts'
+import { savedGame, savedSettings } from './saved.ts'
 
-const answers: Answer[] = [
-    {
-        kind: QuestionKind.choice,
-        picked: {
-            label: 'have a chat with my best friend',
-            outcome: OutcomeId.comfort,
-            points: 2,
-        },
-    },
-    {
-        kind: QuestionKind.choice,
-        picked: { label: 'matcha', outcome: OutcomeId.underground, points: 2 },
-    },
-    { kind: QuestionKind.yesno, value: false },
-    { kind: QuestionKind.yesno, value: true },
-    { kind: QuestionKind.scale, value: 1 },
-    { kind: QuestionKind.yesno, value: true },
-    {
-        kind: QuestionKind.choice,
-        picked: {
-            label: 'only if the camera is better',
-            outcome: OutcomeId.hit,
-            points: 2,
-        },
-    },
-]
+const session = new Session(quiz.outcomes)
 
+const settings = loadSettings(savedSettings)
+const { answers } = loadSavedGame(savedGame)
+
+console.log(`\nHello, ${settings.name}!`)
 console.log(`\n${QUIZ_TITLE}`)
 
-const session = new Session(outcomes)
 session.start()
 
-for (const [index, question] of questions.entries()) {
+for (const [index, question] of quiz.questions.entries()) {
     const answer = answers[index]
 
-    console.log(`\nQuestion ${index + 1}/${questions.length}`)
-    console.log(show(question))
+    console.log(`\nQuestion ${index + 1}/${quiz.questions.length}`)
+    console.log(show(question, settings))
 
     const { outcome, points } = session.record(question, answer)
 
@@ -57,4 +36,20 @@ console.log('\nYou got this because:')
 const reasons = session.explain()
 for (const reason of reasons) {
     console.log(`— ${reason}`)
+}
+
+try {
+    loadSettings('{"name":5,"hints":true}')
+} catch (error) {
+    if (error instanceof Error) {
+        console.log(error.message)
+    }
+}
+
+try {
+    loadSettings('{"name":"Anastasiia","hints"}')
+} catch (error) {
+    if (error instanceof Error) {
+        console.log(error.message)
+    }
 }

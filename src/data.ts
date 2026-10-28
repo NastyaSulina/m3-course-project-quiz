@@ -1,10 +1,11 @@
-import { OutcomeId, QuestionKind, type Outcome, type Question } from './lib/types.ts'
+import { OutcomeId, QuestionKind, type Outcome, type Question, type Quiz } from './lib/types.ts'
 
 export const QUIZ_TITLE = 'Which song in the playlist are you?'
 
 export const questions: Question[] = [
     {
         text: 'You suddenly have a free evening. What do you do?',
+        hint: 'There is no wrong answer',
         kind: QuestionKind.choice,
         choices: [
             {
@@ -58,6 +59,7 @@ export const questions: Question[] = [
     {
         text: 'Are you usually the loudest person in the room?',
         kind: QuestionKind.yesno,
+        hint: 'Your therapist will never see this',
         outcome: OutcomeId.party,
     },
     {
@@ -71,6 +73,7 @@ export const questions: Question[] = [
         low: 'never',
         high: 'all the time',
         outcome: OutcomeId.hit,
+        hint: 'No pressure',
     },
     {
         text: 'Would you say you have great taste in movies?',
@@ -131,3 +134,5 @@ export const outcomes: Outcome[] = [
             'You get everyone dancing, even those who can barely stand. You are at every party, and everyone knows the words!',
     },
 ]
+
+export const quiz: Readonly<Quiz> = { outcomes, questions }
