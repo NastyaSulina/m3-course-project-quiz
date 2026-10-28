@@ -6,6 +6,7 @@ on:
       - "features/quiz/**"
       - ".github/workflows/quiz.yml"
       - ".github/actions/**"
+      - "internal/tooling/**"
 
 jobs:
   lint:

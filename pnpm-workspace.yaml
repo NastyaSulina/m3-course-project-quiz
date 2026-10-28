@@ -1,6 +1,7 @@
 packages:
-  - "features/*"
+  - "internal/*"
   - "apps/*"
+  - "features/**"
 
 catalog:
   eslint: ^10.13.0
