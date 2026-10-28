@@ -1,0 +1,22 @@
+{
+  "name": "quiz",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "node --experimental-transform-types .",
+    "lint": "pnpm run \"/^lint-.*/\"",
+    "lint-prettier": "prettier . --write",
+    "lint-eslint": "eslint . --fix",
+    "lint-typecheck": "tsc --noEmit",
+    "clean": "rm -rf node_modules/.cache tsconfig.tsbuildinfo"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "catalog:",
+    "globals": "^17.13.0",
+    "prettier": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "^8.72.0"
+  }
+}

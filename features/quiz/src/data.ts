@@ -2,7 +2,7 @@ import { OutcomeId, QuestionKind, type Outcome, type Question, type Quiz } from 
 
 export const QUIZ_TITLE = 'Which song in the playlist are you?'
 
-export const questions: Question[] = [
+const questions: Question[] = [
     {
         text: 'You suddenly have a free evening. What do you do?',
         hint: 'There is no wrong answer',
@@ -108,7 +108,7 @@ export const questions: Question[] = [
     },
 ]
 
-export const outcomes: Outcome[] = [
+const outcomes: Outcome[] = [
     {
         id: OutcomeId.underground,
         title: 'underground banger',
