@@ -3,7 +3,7 @@ import { QuestionKind, type Answer, type Question, type Settings } from './types
 export function show(question: Question, settings: Settings): string {
     const hint = settings.hints && question.hint ? `\nHint: ${question.hint}` : ''
 
-    if (question.kind === 'choice') {
+    if (question.kind === QuestionKind.choice) {
         const choices = question.choices.map((choice, index) => `  ${index + 1}. ${choice.label}`)
 
         return `${question.text}\n${choices.join('\n')}${hint}`
