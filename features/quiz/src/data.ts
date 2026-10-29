@@ -1,6 +1,12 @@
-import { OutcomeId, QuestionKind, type Outcome, type Question, type Quiz } from './lib/types.ts'
+import {
+    OutcomeId,
+    QuestionKind,
+    type Outcome,
+    type Question,
+    type Quiz,
+} from './quiz-core/index.ts'
 
-export const QUIZ_TITLE = 'Which song in the playlist are you?'
+const title = 'Which song in the playlist are you?'
 
 const questions: Question[] = [
     {
@@ -135,4 +141,4 @@ const outcomes: Outcome[] = [
     },
 ]
 
-export const quiz: Readonly<Quiz> = { outcomes, questions }
+export const quiz: Readonly<Quiz> = { outcomes, questions, title }

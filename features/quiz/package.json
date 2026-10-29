@@ -1,10 +1,13 @@
 {
-    "name": "quiz",
+    "name": "@platform/quiz",
     "version": "1.0.0",
     "type": "module",
-    "main": "src/index.ts",
+    "exports": {
+        "./data": "./src/data.ts",
+        "./quiz-core": "./src/quiz-core/index.ts",
+        "./session": "./src/session/index.ts"
+    },
     "scripts": {
-        "start": "node --experimental-transform-types .",
         "lint": "pnpm run \"/^lint-.*/\"",
         "lint-prettier": "prettier --check .",
         "lint-eslint": "eslint .",

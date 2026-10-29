@@ -1,4 +1,4 @@
-import { OutcomeId, QuestionKind, type Answer } from './lib/types.ts'
+import { type Answer, OutcomeId, QuestionKind } from '@platform/quiz/quiz-core'
 
 const initialAnswers: Answer[] = [
     {

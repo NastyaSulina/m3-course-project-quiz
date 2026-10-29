@@ -1,6 +1,7 @@
 export interface Quiz {
     outcomes: Outcome[]
     questions: Question[]
+    title: string
 }
 
 export interface Settings {
@@ -73,3 +74,8 @@ interface YesNoAnswer {
 }
 
 export type Answer = ChoiceAnswer | ScaleAnswer | YesNoAnswer
+
+export interface SavedGame {
+    answers: Answer[]
+    startedAt?: string
+}

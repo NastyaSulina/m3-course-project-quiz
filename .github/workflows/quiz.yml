@@ -4,9 +4,10 @@ on:
   push:
     paths:
       - "features/quiz/**"
+      - "internal/tooling/**"
+      - "apps/cli/**"
       - ".github/workflows/quiz.yml"
       - ".github/actions/**"
-      - "internal/tooling/**"
 
 jobs:
   lint:
@@ -14,4 +15,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-      - run: pnpm --filter quiz lint
+      - run: pnpm lint

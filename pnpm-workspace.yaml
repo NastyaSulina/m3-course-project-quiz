@@ -1,6 +1,6 @@
 packages:
-  - "internal/*"
-  - "apps/*"
+  - "internal/**"
+  - "apps/**"
   - "features/**"
 
 catalog:

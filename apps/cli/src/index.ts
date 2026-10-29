@@ -1,8 +1,7 @@
-import { quiz, QUIZ_TITLE } from './data.ts'
-import { loadSavedGame, loadSettings } from './lib/load.ts'
-import { show } from './lib/quiz.ts'
-import { Session } from './lib/session.ts'
-import { savedGame, savedSettings } from './saved.ts'
+import { quiz } from '@platform/quiz/data'
+import { show } from '@platform/quiz/quiz-core'
+import { loadSavedGame, loadSettings, Session } from '@platform/quiz/session'
+import { savedSettings, savedGame } from './saved.ts'
 
 const session = new Session(quiz.outcomes)
 
@@ -10,7 +9,7 @@ const settings = loadSettings(savedSettings)
 const { answers } = loadSavedGame(savedGame)
 
 console.log(`\nHello, ${settings.name}!`)
-console.log(`\n${QUIZ_TITLE}`)
+console.log(`\n${quiz.title}`)
 
 session.start()
 

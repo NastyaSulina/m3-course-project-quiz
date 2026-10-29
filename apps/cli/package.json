@@ -1,0 +1,24 @@
+{
+    "name": "@platform/cli",
+    "version": "1.0.0",
+    "description": "",
+    "type": "module",
+    "main": "src/index.ts",
+    "scripts": {
+        "start": "node --experimental-transform-types .",
+        "lint": "pnpm run \"/^lint-.*/\"",
+        "lint-prettier": "prettier --check .",
+        "lint-eslint": "eslint .",
+        "lint-typecheck": "tsc --noEmit",
+        "clean": "rm -rf node_modules/.cache tsconfig.tsbuildinfo"
+    },
+    "dependencies": {
+        "@platform/quiz": "workspace:*"
+    },
+    "devDependencies": {
+        "@platform/tooling": "workspace:*",
+        "eslint": "catalog:",
+        "prettier": "catalog:",
+        "typescript": "catalog:"
+    }
+}
