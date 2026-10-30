@@ -117,7 +117,7 @@ function isQuestion(value: unknown): value is Question {
         return false
     }
 
-    if (value.kind === QuestionKind.choice) {
+    if (value.kind === 'choice') {
         return (
             'choices' in value &&
             Array.isArray(value.choices) &&
@@ -125,7 +125,7 @@ function isQuestion(value: unknown): value is Question {
         )
     }
 
-    if (value.kind === QuestionKind.scale) {
+    if (value.kind === 'scale') {
         return (
             'low' in value &&
             typeof value.low === 'string' &&
@@ -136,7 +136,7 @@ function isQuestion(value: unknown): value is Question {
         )
     }
 
-    if (value.kind === QuestionKind.yesno) {
+    if (value.kind === 'yesno') {
         return 'outcome' in value && typeof value.outcome === 'string'
     }
 
