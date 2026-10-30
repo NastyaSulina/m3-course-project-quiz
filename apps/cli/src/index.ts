@@ -1,5 +1,5 @@
 import { quiz } from '@platform/quiz/data'
-import { show } from '@platform/quiz/quiz-core'
+import { outline, show, countKinds as kinds } from '@platform/quiz/quiz-core'
 import { loadSavedGame, loadSettings, Session } from '@platform/quiz/session'
 import { savedSettings, savedGame } from './saved.ts'
 
@@ -10,6 +10,13 @@ const { answers } = loadSavedGame(savedGame)
 
 console.log(`\nHello, ${settings.name}!`)
 console.log(`\n${quiz.title}`)
+
+console.log('\nOutline\n')
+console.log(outline(quiz))
+
+const counts = kinds(quiz)
+
+console.log(`\nKinds: choice ${counts.choice}, scale ${counts.scale}, yesno ${counts.yesno}`)
 
 session.start()
 
