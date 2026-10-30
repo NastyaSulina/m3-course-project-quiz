@@ -3,9 +3,10 @@
     "version": "1.0.0",
     "type": "module",
     "exports": {
-        "./data": "./src/data.ts",
-        "./quiz-core": "./src/quiz-core/index.ts",
-        "./session": "./src/session/index.ts"
+        "./quizzes": "./quizzes/index.ts",
+        "./core": "./src/core/index.ts",
+        "./session": "./src/session/index.ts",
+        "./package.json": "./package.json"
     },
     "scripts": {
         "lint": "pnpm run \"/^lint-.*/\"",
@@ -16,6 +17,7 @@
     },
     "devDependencies": {
         "@platform/tooling": "workspace:*",
+        "@types/node": "catalog:",
         "eslint": "catalog:",
         "prettier": "catalog:",
         "typescript": "catalog:"

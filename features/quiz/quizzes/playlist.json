@@ -1,0 +1,130 @@
+{
+    "title": "Which song in the playlist are you?",
+    "outcomes": [
+        {
+            "id": "underground",
+            "title": "underground banger",
+            "description": "Not everyone understands you, and that is perfectly fine. You are a hidden gem with a small but loyal fanbase who absolutely love you!"
+        },
+        {
+            "id": "comfort",
+            "title": "comfort song",
+            "description": "A song for any mood. You could listen to it a hundred times over, and it would never get old..."
+        },
+        {
+            "id": "hit",
+            "title": "the hit",
+            "description": "Everyone loves you. From rap fans to rock fans, you just get along with everyone"
+        },
+        {
+            "id": "party",
+            "title": "party anthem",
+            "description": "You get everyone dancing, even those who can barely stand. You are at every party, and everyone knows the words!"
+        }
+    ],
+    "questions": [
+        {
+            "text": "You suddenly have a free evening. What do you do?",
+            "hint": "There is no wrong answer",
+            "kind": "choice",
+            "choices": [
+                {
+                    "label": "watch a weird movie that no one has heard of",
+                    "outcome": "underground",
+                    "points": 2
+                },
+                {
+                    "label": "have a chat with my best friend",
+                    "outcome": "comfort",
+                    "points": 2
+                },
+                {
+                    "label": "find somewhere fun to go",
+                    "outcome": "hit",
+                    "points": 2
+                },
+                {
+                    "label": "get all my friends together for a night out",
+                    "outcome": "party",
+                    "points": 2
+                }
+            ]
+        },
+        {
+            "text": "What drink are you going for?",
+            "kind": "choice",
+            "choices": [
+                {
+                    "label": "matcha",
+                    "outcome": "underground",
+                    "points": 2
+                },
+                {
+                    "label": "latte/cappuccino",
+                    "outcome": "comfort",
+                    "points": 2
+                },
+                {
+                    "label": "Coca-Cola",
+                    "outcome": "hit",
+                    "points": 2
+                },
+                {
+                    "label": "milkshake",
+                    "outcome": "party",
+                    "points": 2
+                }
+            ]
+        },
+        {
+            "text": "Are you usually the loudest person in the room?",
+            "kind": "yesno",
+            "hint": "Your therapist will never see this",
+            "outcome": "party"
+        },
+        {
+            "text": "Do you still rewatch the TV shows you loved as a child?",
+            "kind": "yesno",
+            "outcome": "comfort"
+        },
+        {
+            "text": "How often do you buy something after seeing it on TikTok?",
+            "kind": "scale",
+            "low": "never",
+            "high": "all the time",
+            "outcome": "hit",
+            "hint": "No pressure"
+        },
+        {
+            "text": "Would you say you have great taste in movies?",
+            "kind": "yesno",
+            "outcome": "underground"
+        },
+        {
+            "text": "How badly do you need a new iPhone?",
+            "kind": "choice",
+            "choices": [
+                {
+                    "label": "my old phone has character",
+                    "outcome": "underground",
+                    "points": 2
+                },
+                {
+                    "label": "I am used to my phone",
+                    "outcome": "comfort",
+                    "points": 2
+                },
+                {
+                    "label": "only if the camera is better",
+                    "outcome": "hit",
+                    "points": 2
+                },
+                {
+                    "label": "I have already pre-ordered it",
+                    "outcome": "party",
+                    "points": 2
+                }
+            ]
+        }
+    ]
+}

@@ -1,12 +1,11 @@
 import {
     award,
-    OutcomeId,
     recap,
     type Answer,
     type Award,
     type Outcome,
     type Question,
-} from '../quiz-core/index.ts'
+} from '../core/index.ts'
 
 enum SessionStatus {
     waiting = 'waiting',
@@ -22,24 +21,19 @@ class SessionError extends Error {
 }
 
 export class Session {
-    private scores: Record<OutcomeId, number> = {
-        [OutcomeId.underground]: 0,
-        [OutcomeId.comfort]: 0,
-        [OutcomeId.hit]: 0,
-        [OutcomeId.party]: 0,
-    }
-    private reasons: Record<OutcomeId, string[]> = {
-        [OutcomeId.underground]: [],
-        [OutcomeId.comfort]: [],
-        [OutcomeId.hit]: [],
-        [OutcomeId.party]: [],
-    }
+    private scores: Record<string, number> = {}
+    private reasons: Record<string, string[]> = {}
 
     private outcomes: Outcome[]
     private status: SessionStatus = SessionStatus.waiting
 
     constructor(outcomes: Outcome[]) {
         this.outcomes = outcomes
+
+        for (const outcome of outcomes) {
+            this.scores[outcome.id] = 0
+            this.reasons[outcome.id] = []
+        }
     }
 
     public start(): void {

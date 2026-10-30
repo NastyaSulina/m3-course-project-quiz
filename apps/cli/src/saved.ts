@@ -1,17 +1,17 @@
-import { type Answer, OutcomeId, QuestionKind } from '@platform/quiz/quiz-core'
+import { type Answer, QuestionKind } from '@platform/quiz/core'
 
 const initialAnswers: Answer[] = [
     {
         kind: QuestionKind.choice,
         picked: {
             label: 'have a chat with my best friend',
-            outcome: OutcomeId.comfort,
+            outcome: 'comfort',
             points: 2,
         },
     },
     {
         kind: QuestionKind.choice,
-        picked: { label: 'matcha', outcome: OutcomeId.underground, points: 2 },
+        picked: { label: 'matcha', outcome: 'underground', points: 2 },
     },
     { kind: QuestionKind.yesno, value: false },
     { kind: QuestionKind.yesno, value: true },
@@ -21,7 +21,7 @@ const initialAnswers: Answer[] = [
         kind: QuestionKind.choice,
         picked: {
             label: 'only if the camera is better',
-            outcome: OutcomeId.hit,
+            outcome: 'hit',
             points: 2,
         },
     },

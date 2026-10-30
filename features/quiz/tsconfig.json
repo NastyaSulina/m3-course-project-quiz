@@ -1,4 +1,7 @@
 {
     "extends": "@platform/tooling/typescript",
-    "include": ["src"]
+    "compilerOptions": {
+        "types": ["node"]
+    },
+    "include": ["src", "quizzes"]
 }

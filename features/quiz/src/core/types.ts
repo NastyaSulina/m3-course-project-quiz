@@ -9,15 +9,8 @@ export interface Settings {
     hints?: boolean
 }
 
-export enum OutcomeId {
-    underground = 'underground',
-    comfort = 'comfort',
-    hit = 'hit',
-    party = 'party',
-}
-
 export interface Outcome {
-    id: OutcomeId
+    id: string
     title: string
     description: string
 }
@@ -25,7 +18,7 @@ export interface Outcome {
 export interface Choice {
     label: string
     points: number
-    outcome: OutcomeId
+    outcome: string
 }
 
 export enum QuestionKind {
@@ -46,14 +39,14 @@ interface ChoiceQuestion extends BaseQuestion {
 
 interface YesNoQuestion extends BaseQuestion {
     kind: QuestionKind.yesno
-    outcome: OutcomeId
+    outcome: string
 }
 
 interface ScaleQuestion extends BaseQuestion {
     kind: QuestionKind.scale
     low: string
     high: string
-    outcome: OutcomeId
+    outcome: string
 }
 
 export type Question = ChoiceQuestion | ScaleQuestion | YesNoQuestion

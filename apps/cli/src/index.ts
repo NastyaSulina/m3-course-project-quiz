@@ -1,7 +1,16 @@
-import { quiz } from '@platform/quiz/data'
-import { outline, show, countKinds as kinds } from '@platform/quiz/quiz-core'
+import { outline, show, countKinds as kinds, type Quiz } from '@platform/quiz/core'
 import { loadSavedGame, loadSettings, Session } from '@platform/quiz/session'
 import { savedSettings, savedGame } from './saved.ts'
+import loadQuiz from '@platform/quiz/quizzes'
+
+let quiz: Quiz
+
+try {
+    quiz = await loadQuiz('playlist')
+} catch (e) {
+    console.error(e instanceof Error ? e.message : e)
+    process.exit(1)
+}
 
 const session = new Session(quiz.outcomes)
 
@@ -43,6 +52,8 @@ const reasons = session.explain()
 for (const reason of reasons) {
     console.log(`— ${reason}`)
 }
+
+console.log('')
 
 try {
     loadSettings('{"name":5,"hints":true}')

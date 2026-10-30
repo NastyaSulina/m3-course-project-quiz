@@ -1,4 +1,4 @@
-import { isAnswer, type SavedGame, type Settings } from '../quiz-core/index.ts'
+import { isAnswer, type SavedGame, type Settings } from '../core/index.ts'
 
 export function loadSavedGame(saved: string): SavedGame {
     let value: unknown
