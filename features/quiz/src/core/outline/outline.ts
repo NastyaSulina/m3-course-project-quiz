@@ -1,4 +1,4 @@
-import { QuestionKind, type Quiz } from '../types.ts'
+import { QuestionKind, type Quiz } from '../index.ts'
 
 function outline(quiz: Quiz): string {
     const { questions } = quiz
