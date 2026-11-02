@@ -1,9 +1,9 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
+import { type Quiz } from '../game-core/index.ts'
+import { loadQuiz } from './load-quiz.ts'
 
-import { isQuiz, type Quiz } from '../src/core/index.ts'
-
-async function loadQuiz(name: string): Promise<Quiz> {
+async function readQuiz(name: string): Promise<Quiz> {
     const file = path.join(import.meta.dirname, `${name}.json`)
 
     let text: string
@@ -18,19 +18,7 @@ async function loadQuiz(name: string): Promise<Quiz> {
         throw error
     }
 
-    let value: unknown
-
-    try {
-        value = JSON.parse(text)
-    } catch {
-        throw new Error(`The quiz "${name}" is not valid JSON`)
-    }
-
-    if (!isQuiz(value)) {
-        throw new Error(`The quiz "${name}" does not have the shape of a quiz`)
-    }
-
-    return value
+    return loadQuiz(text, name)
 }
 
-export default loadQuiz
+export default readQuiz

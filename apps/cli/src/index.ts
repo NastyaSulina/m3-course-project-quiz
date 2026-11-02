@@ -1,18 +1,25 @@
-import { outline, show, countKinds as kinds, type Quiz } from '@platform/quiz/core'
-import { loadSavedGame, loadSettings, Session } from '@platform/quiz/session'
+import {
+    show,
+    outline,
+    type Quiz,
+    loadSettings,
+    loadSavedGame,
+    countKinds as kinds,
+} from '@platform/quiz/game-core'
+import GameState from '@platform/quiz/game-state'
 import { savedSettings, savedGame } from './saved.ts'
-import loadQuiz from '@platform/quiz/quizzes'
+import readQuiz from '@platform/quiz/quizzes'
 
 let quiz: Quiz
 
 try {
-    quiz = await loadQuiz('playlist')
+    quiz = await readQuiz('playlist')
 } catch (e) {
     console.error(e instanceof Error ? e.message : e)
     process.exit(1)
 }
 
-const session = new Session(quiz.outcomes)
+const game = new GameState(quiz.outcomes)
 
 const settings = loadSettings(savedSettings)
 const { answers } = loadSavedGame(savedGame)
@@ -27,7 +34,7 @@ const counts = kinds(quiz)
 
 console.log(`\nKinds: choice ${counts.choice}, scale ${counts.scale}, yesno ${counts.yesno}`)
 
-session.start()
+game.start()
 
 for (const [index, question] of quiz.questions.entries()) {
     const answer = answers[index]
@@ -35,20 +42,20 @@ for (const [index, question] of quiz.questions.entries()) {
     console.log(`\nQuestion ${index + 1}/${quiz.questions.length}`)
     console.log(show(question, settings))
 
-    const { outcome, points } = session.record(question, answer)
+    const { outcome, points } = game.record(question, answer)
 
     console.log(`Answer worth ${points} ${points === 1 ? 'point' : 'points'} for ${outcome}`)
 }
 
-session.finish()
-const result = session.result()
+game.finish()
+const result = game.result()
 
 console.log(`\nYou are: ${result.title}`)
 console.log(result.description)
 
 console.log('\nYou got this because:')
 
-const reasons = session.explain()
+const reasons = game.explain()
 for (const reason of reasons) {
     console.log(`— ${reason}`)
 }

@@ -3,9 +3,9 @@
     "version": "1.0.0",
     "type": "module",
     "exports": {
-        "./quizzes": "./quizzes/index.ts",
-        "./core": "./src/core/index.ts",
-        "./session": "./src/session/index.ts",
+        "./quizzes": "./src/quizzes/index.ts",
+        "./game-core": "./src/game-core/index.ts",
+        "./game-state": "./src/game-state/index.ts",
         "./package.json": "./package.json"
     },
     "scripts": {

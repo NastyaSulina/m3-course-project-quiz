@@ -5,7 +5,41 @@ import {
     type Outcome,
     type Question,
     type Quiz,
+    type SavedGame,
+    type Settings,
 } from './types.ts'
+
+export function isSettings(value: unknown): value is Settings {
+    if (typeof value !== 'object' || value === null) {
+        return false
+    }
+
+    if (!('name' in value) || typeof value.name !== 'string') {
+        return false
+    }
+
+    if ('hints' in value && typeof value.hints !== 'boolean') {
+        return false
+    }
+
+    return true
+}
+
+export function isSavedGame(value: unknown): value is SavedGame {
+    if (typeof value !== 'object' || value === null) {
+        return false
+    }
+
+    if (!('answers' in value) || !Array.isArray(value.answers) || !value.answers.every(isAnswer)) {
+        return false
+    }
+
+    if ('startedAt' in value && typeof value.startedAt !== 'string') {
+        return false
+    }
+
+    return true
+}
 
 export function isAnswer(value: unknown): value is Answer {
     if (typeof value !== 'object' || value === null || !('kind' in value)) {

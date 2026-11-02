@@ -1,6 +1,6 @@
-import { QuestionKind, type Quiz } from '../index.ts'
+import { QuestionKind, type Quiz } from './types.ts'
 
-function outline(quiz: Quiz): string {
+export function outline(quiz: Quiz): string {
     const { questions } = quiz
     const lines: string[] = []
 
@@ -45,5 +45,3 @@ export function countKinds(quiz: Quiz): Record<QuestionKind, number> {
 
     return counts
 }
-
-export default outline

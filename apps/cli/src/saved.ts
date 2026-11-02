@@ -1,4 +1,4 @@
-import { type Answer, QuestionKind } from '@platform/quiz/core'
+import { QuestionKind, type Answer } from '@platform/quiz/game-core'
 
 const initialAnswers: Answer[] = [
     {

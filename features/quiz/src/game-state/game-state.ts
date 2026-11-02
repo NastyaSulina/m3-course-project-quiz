@@ -5,27 +5,27 @@ import {
     type Award,
     type Outcome,
     type Question,
-} from '../core/index.ts'
+} from '../game-core/index.ts'
 
-enum SessionStatus {
+enum GameStatus {
     waiting = 'waiting',
     asking = 'asking',
     done = 'done',
 }
 
-class SessionError extends Error {
-    constructor(message: string, sessionStatus: SessionStatus) {
-        super(`${message}. Current status: ${sessionStatus}`)
-        this.name = 'SessionError'
+class GameError extends Error {
+    constructor(message: string, GameStatus: GameStatus) {
+        super(`${message}. Current status: ${GameStatus}`)
+        this.name = 'GameError'
     }
 }
 
-export class Session {
+export class GameState {
     private scores: Record<string, number> = {}
     private reasons: Record<string, string[]> = {}
 
     private outcomes: Outcome[]
-    private status: SessionStatus = SessionStatus.waiting
+    private status: GameStatus = GameStatus.waiting
 
     constructor(outcomes: Outcome[]) {
         this.outcomes = outcomes
@@ -37,16 +37,16 @@ export class Session {
     }
 
     public start(): void {
-        if (this.status !== SessionStatus.waiting) {
-            throw new SessionError('The quiz has already started', this.status)
+        if (this.status !== GameStatus.waiting) {
+            throw new GameError('The quiz has already started', this.status)
         }
 
-        this.status = SessionStatus.asking
+        this.status = GameStatus.asking
     }
 
     public record(question: Question, answer: Answer): Award {
-        if (this.status !== SessionStatus.asking) {
-            throw new SessionError('Cannot record an answer', this.status)
+        if (this.status !== GameStatus.asking) {
+            throw new GameError('Cannot record an answer', this.status)
         }
 
         const { outcome, points } = award(question, answer)
@@ -61,20 +61,20 @@ export class Session {
     }
 
     public finish(): void {
-        if (this.status !== SessionStatus.asking) {
-            throw new SessionError('Cannot finish the quiz', this.status)
+        if (this.status !== GameStatus.asking) {
+            throw new GameError('Cannot finish the quiz', this.status)
         }
 
         if (!Object.values(this.scores).some((value) => value > 0)) {
             throw new Error('No points have been scored')
         }
 
-        this.status = SessionStatus.done
+        this.status = GameStatus.done
     }
 
     public result(): Outcome {
-        if (this.status !== SessionStatus.done) {
-            throw new SessionError('Cannot get the result', this.status)
+        if (this.status !== GameStatus.done) {
+            throw new GameError('Cannot get the result', this.status)
         }
 
         let best = this.outcomes[0]
@@ -89,8 +89,8 @@ export class Session {
     }
 
     public explain(): string[] {
-        if (this.status !== SessionStatus.done) {
-            throw new SessionError('Cannot get the explanation', this.status)
+        if (this.status !== GameStatus.done) {
+            throw new GameError('Cannot get the explanation', this.status)
         }
 
         const best = this.result()
@@ -98,3 +98,5 @@ export class Session {
         return [...this.reasons[best.id]]
     }
 }
+
+export default GameState
