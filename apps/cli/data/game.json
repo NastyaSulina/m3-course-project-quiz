@@ -1,0 +1,32 @@
+{
+    "answers": [
+        {
+            "kind": "choice",
+            "picked": {
+                "label": "have a chat with my best friend",
+                "outcome": "comfort",
+                "points": 2
+            }
+        },
+        {
+            "kind": "choice",
+            "picked": {
+                "label": "matcha",
+                "outcome": "underground",
+                "points": 2
+            }
+        },
+        { "kind": "yesno", "value": false },
+        { "kind": "yesno", "value": true },
+        { "kind": "scale", "value": 1 },
+        { "kind": "yesno", "value": true },
+        {
+            "kind": "choice",
+            "picked": {
+                "label": "only if the camera is better",
+                "outcome": "hit",
+                "points": 2
+            }
+        }
+    ]
+}
