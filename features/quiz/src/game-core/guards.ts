@@ -54,6 +54,7 @@ export function isAnswer(value: unknown): value is Answer {
         return (
             'value' in value &&
             typeof value.value === 'number' &&
+            Number.isInteger(value.value) &&
             value.value >= 0 &&
             value.value <= 2
         )
