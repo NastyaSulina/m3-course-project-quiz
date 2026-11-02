@@ -10,7 +10,7 @@
     }
   },
   "scripts": {
-    "start": "nx run cli:start",
+    "start": "pnpm --filter @platform/cli start",
     "lint": "nx run-many -t lint",
     "lint-typecheck": "nx run-many -t lint-typecheck",
     "lint-eslint": "nx run-many -t lint-eslint",

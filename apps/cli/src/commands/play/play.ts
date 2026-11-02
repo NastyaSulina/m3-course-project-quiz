@@ -18,7 +18,7 @@ export default async function play(quizName: string, options: { name?: string })
     console.log(outline(quiz))
 
     const counts = kinds(quiz)
-    console.log(`\nKinds: choice ${counts.choice}, scale ${counts.scale}, yesno ${counts.yesno}`)
+    console.log(`\nKinds: choice ${counts.choice}, scale ${counts.scale}, yesno ${counts.yesno}\n`)
 
     game.start()
 
@@ -49,6 +49,4 @@ export default async function play(quizName: string, options: { name?: string })
     for (const reason of reasons) {
         console.log(`— ${reason}`)
     }
-
-    console.log('')
 }

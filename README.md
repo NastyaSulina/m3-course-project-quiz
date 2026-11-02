@@ -4,10 +4,17 @@ A simple BuzzFeed-style quiz called "Which song in the playlist are you?" built 
 
 ## Run
 
-```bash
-pnpm install
-pnpm start
-```
+Install dependencies:
+`pnpm install`
+
+Play the quiz (example usage):
+`pnpm start play playlist --name Anastasiia`
+
+Replay the quiz using saved answers (example usage):
+`pnpm start replay playlist`
+
+Help:
+`pnpm start --help`
 
 ## Linting
 
@@ -18,6 +25,7 @@ pnpm lint
 ```
 
 ## Monorepo structure
+
 - `apps/cli`: runs the quiz and displays the result
-- `features/quiz`: quiz data, types, validation, scoring and session management 
+- `features/quiz`: quiz data, types, validation, scoring and session management
 - `internal/tooling`: shared TypeScript, ESLint and Prettier settings
