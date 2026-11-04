@@ -32,6 +32,18 @@ const sessionPlugin: FastifyPluginAsync = async (fastify) => {
         })
     })
 
+    fastify.get<{ Headers: SessionHeader }>('/session', async (request, reply) => {
+        const session = findSessionById(request.headers['x-session-id'])
+        if (!session) {
+            return reply.code(401).send({ error: 'Unknown session' })
+        }
+
+        return {
+            answered: session.answered,
+            total: session.quiz.questions.length,
+        }
+    })
+
     fastify.post<{ Body: Submission | undefined; Headers: SessionHeader }>(
         '/session/answer',
         async (request, reply) => {
