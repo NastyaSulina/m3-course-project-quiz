@@ -1,0 +1,34 @@
+{
+    "name": "@platform/api",
+    "version": "1.0.0",
+    "description": "",
+    "type": "module",
+    "main": "src/index.ts",
+    "imports": {
+        "#shared/*": "./src/shared/*/index.ts"
+    },
+    "exports": {
+        "./package.json": "./package.json"
+    },
+    "scripts": {
+        "dev": "nodemon .",
+        "start": "node --experimental-transform-types .",
+        "lint": "pnpm run \"/^lint-.*/\"",
+        "lint-prettier": "prettier --check .",
+        "lint-eslint": "eslint .",
+        "lint-typecheck": "tsc --noEmit",
+        "clean": "rm -rf node_modules/.cache tsconfig.tsbuildinfo"
+    },
+    "dependencies": {
+        "@platform/quiz": "workspace:*",
+        "fastify": "^5.12.8"
+    },
+    "devDependencies": {
+        "@platform/tooling": "workspace:*",
+        "@types/node": "catalog:",
+        "eslint": "catalog:",
+        "nodemon": "^3.1.14",
+        "prettier": "catalog:",
+        "typescript": "catalog:"
+    }
+}

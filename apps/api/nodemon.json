@@ -1,0 +1,6 @@
+{
+    "verbose": true,
+    "ext": "ts",
+    "exec": "node --experimental-transform-types",
+    "watch": ["./src"]
+}
