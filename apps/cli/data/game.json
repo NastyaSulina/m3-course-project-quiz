@@ -3,17 +3,13 @@
         {
             "kind": "choice",
             "picked": {
-                "label": "have a chat with my best friend",
-                "outcome": "comfort",
-                "points": 2
+                "label": "have a chat with my best friend"
             }
         },
         {
             "kind": "choice",
             "picked": {
-                "label": "matcha",
-                "outcome": "underground",
-                "points": 2
+                "label": "matcha"
             }
         },
         { "kind": "yesno", "value": false },
@@ -23,9 +19,7 @@
         {
             "kind": "choice",
             "picked": {
-                "label": "only if the camera is better",
-                "outcome": "hit",
-                "points": 2
+                "label": "only if the camera is better"
             }
         }
     ]

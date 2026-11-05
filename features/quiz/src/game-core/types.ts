@@ -71,12 +71,10 @@ interface YesNoAnswer {
 }
 
 export type Answer = ChoiceAnswer | ScaleAnswer | YesNoAnswer
-
 export interface SavedGame {
-    answers: Answer[]
+    answers: Submission[]
     startedAt?: string
 }
-
 interface ChoicePrompt extends BaseQuestion {
     kind: QuestionKind.choice
     choices: PromptChoice[]

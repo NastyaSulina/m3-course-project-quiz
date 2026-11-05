@@ -32,7 +32,11 @@ export function isSavedGame(value: unknown): value is SavedGame {
         return false
     }
 
-    if (!('answers' in value) || !Array.isArray(value.answers) || !value.answers.every(isAnswer)) {
+    if (
+        !('answers' in value) ||
+        !Array.isArray(value.answers) ||
+        !value.answers.every(isSubmission)
+    ) {
         return false
     }
 

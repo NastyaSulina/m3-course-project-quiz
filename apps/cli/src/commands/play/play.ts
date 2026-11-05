@@ -7,8 +7,7 @@ import {
 } from '@platform/quiz/game-core'
 import { ask } from './ask.ts'
 import { locateSettings, readSettings } from '../../files/index.ts'
-
-const BASE_URL = 'http://localhost:3000'
+import { call } from '../../call.ts'
 
 interface Options {
     name?: string
@@ -37,8 +36,6 @@ export default async function play(quizName: string, options: Options): Promise<
     console.log('\nQuestions\n')
     for (const prompt of quiz.prompts) {
         const submission = await ask(settings, prompt)
-
-        console.log(JSON.stringify(submission))
 
         await call('/session/answer', {
             method: 'POST',
@@ -74,38 +71,4 @@ export default async function play(quizName: string, options: Options): Promise<
     for (const reason of result.reasons) {
         console.log(`— ${reason}`)
     }
-}
-
-function call(path: string, init?: RequestInit): Promise<void>
-function call<CallResponse>(path: string, init?: RequestInit): Promise<CallResponse>
-
-async function call<CallResponse>(path: string, init?: RequestInit): Promise<CallResponse | void> {
-    let response: Response
-
-    try {
-        response = await fetch(`${BASE_URL}${path}`, init)
-    } catch {
-        throw new Error(`Cannot reach the server at ${BASE_URL}`)
-    }
-
-    if (!response.ok) {
-        const body: unknown = await response.json()
-
-        if (
-            typeof body === 'object' &&
-            body !== null &&
-            'error' in body &&
-            typeof body.error === 'string'
-        ) {
-            throw new Error(body.error)
-        }
-
-        throw new Error(`The server answered ${response.status}`)
-    }
-
-    if (response.status === 204) {
-        return
-    }
-
-    return response.json() as CallResponse
 }
