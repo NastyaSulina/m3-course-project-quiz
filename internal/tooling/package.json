@@ -9,6 +9,11 @@
         "./prettier": "./src/.prettierrc.json",
         "./typescript": "./src/tsconfig.base.json"
     },
+    "scripts": {
+        "lint": "pnpm run lint-eslint && pnpm run lint-prettier",
+        "lint-eslint": "eslint .",
+        "lint-prettier": "prettier --check ."
+    },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
         "eslint": "catalog:",
