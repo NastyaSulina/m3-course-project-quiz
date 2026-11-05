@@ -3,11 +3,7 @@ export interface Quiz {
     questions: Question[]
     title: string
 }
-export interface QuizResponse {
-    outcomes: Outcome[]
-    prompts: Prompt[]
-    title: string
-}
+
 export interface Settings {
     name: string
     hints?: boolean
@@ -71,6 +67,7 @@ interface YesNoAnswer {
 }
 
 export type Answer = ChoiceAnswer | ScaleAnswer | YesNoAnswer
+
 export interface SavedGame {
     answers: Submission[]
     startedAt?: string

@@ -6,6 +6,7 @@
         "./quizzes": "./src/quizzes/index.ts",
         "./game-core": "./src/game-core/index.ts",
         "./game-state": "./src/game-state/index.ts",
+        "./services": "./src/services/index.ts",
         "./package.json": "./package.json"
     },
     "scripts": {

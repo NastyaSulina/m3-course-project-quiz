@@ -1,20 +1,14 @@
-import {
-    outline,
-    countKinds as kinds,
-    recap,
-    type Submission,
-    type QuizResponse,
-} from '@platform/quiz/game-core'
+import { outline, countKinds as kinds, recap, type Submission } from '@platform/quiz/game-core'
 import { ask } from './ask.ts'
 import { locateSettings, readSettings } from '../../files/index.ts'
-import { call } from '../../call.ts'
+import { getQuiz, getResult, sendAnswer, startSession } from '@platform/quiz/services'
 
 interface Options {
     name?: string
 }
 
 export default async function play(quizName: string, options: Options): Promise<void> {
-    const quiz = await call<QuizResponse>(`/quizzes/${encodeURIComponent(quizName)}`)
+    const quiz = await getQuiz(quizName)
     const settings = await readSettings(locateSettings())
 
     console.log(`\nHello, ${options.name ?? settings.name ?? 'player'}!`)
@@ -26,25 +20,15 @@ export default async function play(quizName: string, options: Options): Promise<
     const counts = kinds(quiz.prompts)
     console.log(`\nKinds: choice ${counts.choice}, scale ${counts.scale}, yesno ${counts.yesno}`)
 
-    const { session_id: sessionId } = await call<{ session_id: string }>('/session', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ quiz: quizName }),
-    })
+    const sessionId = await startSession(quizName)
+
     const submissions: Submission[] = []
 
     console.log('\nQuestions\n')
     for (const prompt of quiz.prompts) {
         const submission = await ask(settings, prompt)
 
-        await call('/session/answer', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'x-session-id': sessionId,
-            },
-            body: JSON.stringify(submission),
-        })
+        await sendAnswer(sessionId, submission)
 
         submissions.push(submission)
     }
@@ -55,13 +39,7 @@ export default async function play(quizName: string, options: Options): Promise<
         console.log(recap(prompt, submissions[index]))
     }
 
-    const result = await call<{
-        title: string
-        description: string
-        reasons: string[]
-    }>('/session/result', {
-        headers: { 'x-session-id': sessionId },
-    })
+    const result = await getResult(sessionId)
 
     console.log(`\nYou are: ${result.title}`)
     console.log(result.description)

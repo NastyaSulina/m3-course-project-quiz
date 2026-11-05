@@ -13,7 +13,6 @@ const quizzesPlugin: FastifyPluginAsync = async (fastify) => {
         }
 
         return {
-            outcomes: quiz.outcomes,
             prompts: quiz.questions.map(toPrompt),
             title: quiz.title,
         }

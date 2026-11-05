@@ -1,16 +1,10 @@
-import {
-    outline,
-    countKinds as kinds,
-    recap,
-    show,
-    type QuizResponse,
-} from '@platform/quiz/game-core'
+import { outline, countKinds as kinds, recap, show } from '@platform/quiz/game-core'
+import { getQuiz, getResult, sendAnswer, startSession } from '@platform/quiz/services'
 
 import { locateSavedGame, locateSettings, readSavedGame, readSettings } from '../../files/index.ts'
-import { call } from '../../call.ts'
 
 export default async function replay(quizName: string): Promise<void> {
-    const quiz = await call<QuizResponse>(`/quizzes/${encodeURIComponent(quizName)}`)
+    const quiz = await getQuiz(quizName)
     const settings = await readSettings(locateSettings())
     const { answers } = await readSavedGame(locateSavedGame())
 
@@ -23,11 +17,7 @@ export default async function replay(quizName: string): Promise<void> {
     const counts = kinds(quiz.prompts)
     console.log(`\nKinds: choice ${counts.choice}, scale ${counts.scale}, yesno ${counts.yesno}`)
 
-    const { session_id: sessionId } = await call<{ session_id: string }>('/session', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ quiz: quizName }),
-    })
+    const sessionId = await startSession(quizName)
 
     for (const [index, prompt] of quiz.prompts.entries()) {
         const submission = answers[index]
@@ -39,14 +29,7 @@ export default async function replay(quizName: string): Promise<void> {
         console.log(`\nQuestion ${index + 1}/${quiz.prompts.length}`)
         console.log(show(prompt, settings))
 
-        await call('/session/answer', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'x-session-id': sessionId,
-            },
-            body: JSON.stringify(submission),
-        })
+        await sendAnswer(sessionId, submission)
     }
 
     console.log('\nRecap\n')
@@ -55,13 +38,7 @@ export default async function replay(quizName: string): Promise<void> {
         console.log(recap(prompt, answers[index]))
     }
 
-    const result = await call<{
-        title: string
-        description: string
-        reasons: string[]
-    }>('/session/result', {
-        headers: { 'x-session-id': sessionId },
-    })
+    const result = await getResult(sessionId)
 
     console.log(`\nYou are: ${result.title}`)
     console.log(result.description)
