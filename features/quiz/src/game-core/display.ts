@@ -1,6 +1,6 @@
-import { QuestionKind, type Answer, type Question, type Settings } from './types.ts'
+import { QuestionKind, type Prompt, type Settings, type Submission } from './types.ts'
 
-export function show(question: Question, settings: Settings): string {
+export function show(question: Prompt, settings: Settings): string {
     const hint = settings.hints && question.hint ? `\nHint: ${question.hint}` : ''
 
     if (question.kind === QuestionKind.choice) {
@@ -20,7 +20,7 @@ export function show(question: Question, settings: Settings): string {
     throw new Error('Unknown kind')
 }
 
-export function recap(question: Question, answer: Answer): string {
+export function recap(question: Prompt, answer: Submission): string {
     if (answer.kind !== question.kind) {
         throw new Error('The answer and the question are not of the same kind')
     }

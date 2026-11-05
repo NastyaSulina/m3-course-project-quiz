@@ -3,10 +3,12 @@ import {
     type Answer,
     type Choice,
     type Outcome,
+    type PromptChoice,
     type Question,
     type Quiz,
     type SavedGame,
     type Settings,
+    type Submission,
 } from './types.ts'
 
 export function isSettings(value: unknown): value is Settings {
@@ -173,6 +175,41 @@ function isQuestion(value: unknown): value is Question {
 
     if (value.kind === 'yesno') {
         return 'outcome' in value && typeof value.outcome === 'string'
+    }
+
+    return false
+}
+
+export function isPromptChoice(value: unknown): value is PromptChoice {
+    return (
+        typeof value === 'object' &&
+        value !== null &&
+        'label' in value &&
+        typeof value.label === 'string'
+    )
+}
+
+export function isSubmission(value: unknown): value is Submission {
+    if (typeof value !== 'object' || value === null || !('kind' in value)) {
+        return false
+    }
+
+    if (value.kind === QuestionKind.choice) {
+        return 'picked' in value && isPromptChoice(value.picked)
+    }
+
+    if (value.kind === QuestionKind.scale) {
+        return (
+            'value' in value &&
+            typeof value.value === 'number' &&
+            Number.isInteger(value.value) &&
+            value.value >= 0 &&
+            value.value <= 2
+        )
+    }
+
+    if (value.kind === QuestionKind.yesno) {
+        return 'value' in value && typeof value.value === 'boolean'
     }
 
     return false

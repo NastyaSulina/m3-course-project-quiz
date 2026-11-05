@@ -1,7 +1,6 @@
-import { QuestionKind, type Quiz } from './types.ts'
+import { QuestionKind, type Prompt } from './types.ts'
 
-export function outline(quiz: Quiz): string {
-    const { questions } = quiz
+export function outline(questions: Prompt[]): string {
     const lines: string[] = []
 
     for (const [index, question] of questions.entries()) {
@@ -28,18 +27,14 @@ export function outline(quiz: Quiz): string {
     return lines.join('\n')
 }
 
-export function countKinds(quiz: Quiz): Record<QuestionKind, number> {
+export function countKinds(questions: Prompt[]): Record<QuestionKind, number> {
     const counts: Record<QuestionKind, number> = {
         [QuestionKind.choice]: 0,
         [QuestionKind.scale]: 0,
         [QuestionKind.yesno]: 0,
     }
 
-    for (const question of quiz.questions) {
-        if (!Object.values(QuestionKind).some((kind) => kind === question.kind)) {
-            throw new Error('Unknown kind')
-        }
-
+    for (const question of questions) {
         counts[question.kind]++
     }
 

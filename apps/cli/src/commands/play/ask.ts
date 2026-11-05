@@ -1,7 +1,7 @@
 import { confirm, input, select } from '@inquirer/prompts'
-import { QuestionKind, type Answer, type Question, type Settings } from '@platform/quiz/game-core'
+import { QuestionKind, type Prompt, type Settings, type Submission } from '@platform/quiz/game-core'
 
-export async function ask(settings: Settings, question: Question): Promise<Answer> {
+export async function ask(settings: Settings, question: Prompt): Promise<Submission> {
     const hint = question.hint && settings.hints ? `\nHint: ${question.hint}` : ''
     const message = `${question.text}${hint}`
 

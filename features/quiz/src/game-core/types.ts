@@ -3,6 +3,11 @@ export interface Quiz {
     questions: Question[]
     title: string
 }
+export interface QuizResponse {
+    outcomes: Outcome[]
+    prompts: Prompt[]
+    title: string
+}
 export interface Settings {
     name: string
     hints?: boolean
@@ -73,34 +78,34 @@ export interface SavedGame {
 }
 
 interface ChoicePrompt extends BaseQuestion {
-    kind: 'choice'
+    kind: QuestionKind.choice
     choices: PromptChoice[]
 }
 
 interface ScalePrompt extends BaseQuestion {
-    kind: 'scale'
+    kind: QuestionKind.scale
     low: string
     high: string
 }
 
 interface YesNoPrompt extends BaseQuestion {
-    kind: 'yesno'
+    kind: QuestionKind.yesno
 }
 
 export type Prompt = ChoicePrompt | ScalePrompt | YesNoPrompt
 
 interface ChoiceSubmission {
-    kind: 'choice'
+    kind: QuestionKind.choice
     picked: PromptChoice
 }
 
 interface ScaleSubmission {
-    kind: 'scale'
+    kind: QuestionKind.scale
     value: number
 }
 
 interface YesNoSubmission {
-    kind: 'yesno'
+    kind: QuestionKind.yesno
     value: boolean
 }
 

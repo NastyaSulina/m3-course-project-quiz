@@ -3,7 +3,7 @@ import { QuestionKind, type Prompt, type Question } from '@platform/quiz/game-co
 export function toPrompt(question: Question): Prompt {
     if (question.kind === QuestionKind.choice) {
         return {
-            kind: 'choice',
+            kind: QuestionKind.choice,
             text: question.text,
             hint: question.hint,
             choices: question.choices.map(({ label }) => ({ label })),
@@ -12,7 +12,7 @@ export function toPrompt(question: Question): Prompt {
 
     if (question.kind === QuestionKind.scale) {
         return {
-            kind: 'scale',
+            kind: QuestionKind.scale,
             text: question.text,
             hint: question.hint,
             low: question.low,
@@ -22,7 +22,7 @@ export function toPrompt(question: Question): Prompt {
 
     if (question.kind === QuestionKind.yesno) {
         return {
-            kind: 'yesno',
+            kind: QuestionKind.yesno,
             text: question.text,
             hint: question.hint,
         }

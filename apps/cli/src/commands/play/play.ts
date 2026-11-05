@@ -1,52 +1,111 @@
-import { outline, countKinds as kinds, type Answer, recap } from '@platform/quiz/game-core'
-import { locateSettings, readSettings } from '../../files/index.ts'
-import GameState from '@platform/quiz/game-state'
-import readQuiz from '@platform/quiz/quizzes'
+import {
+    outline,
+    countKinds as kinds,
+    recap,
+    type Submission,
+    type QuizResponse,
+} from '@platform/quiz/game-core'
 import { ask } from './ask.ts'
+import { locateSettings, readSettings } from '../../files/index.ts'
 
-export default async function play(quizName: string, options: { name?: string }): Promise<void> {
-    const quiz = await readQuiz(quizName)
+const BASE_URL = 'http://localhost:3000'
+
+interface Options {
+    name?: string
+}
+
+export default async function play(quizName: string, options: Options): Promise<void> {
+    const quiz = await call<QuizResponse>(`/quizzes/${encodeURIComponent(quizName)}`)
     const settings = await readSettings(locateSettings())
-    const answers: Answer[] = []
-
-    const game = new GameState(quiz.outcomes)
 
     console.log(`\nHello, ${options.name ?? settings.name ?? 'player'}!`)
     console.log(`\n${quiz.title}`)
 
     console.log('\nOutline\n')
-    console.log(outline(quiz))
+    console.log(outline(quiz.prompts))
 
-    const counts = kinds(quiz)
-    console.log(`\nKinds: choice ${counts.choice}, scale ${counts.scale}, yesno ${counts.yesno}\n`)
+    const counts = kinds(quiz.prompts)
+    console.log(`\nKinds: choice ${counts.choice}, scale ${counts.scale}, yesno ${counts.yesno}`)
 
-    game.start()
+    const { session_id: sessionId } = await call<{ session_id: string }>('/session', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ quiz: quizName }),
+    })
+    const submissions: Submission[] = []
 
-    for (const question of quiz.questions) {
-        const answer = await ask(settings, question)
-        const { outcome, points } = game.record(question, answer)
+    console.log('\nQuestions\n')
+    for (const prompt of quiz.prompts) {
+        const submission = await ask(settings, prompt)
 
-        answers.push(answer)
+        console.log(JSON.stringify(submission))
 
-        console.log(`Answer worth ${points} ${points === 1 ? 'point' : 'points'} for ${outcome}`)
+        await call('/session/answer', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'x-session-id': sessionId,
+            },
+            body: JSON.stringify(submission),
+        })
+
+        submissions.push(submission)
     }
 
     console.log('\nRecap\n')
 
-    for (const [index, question] of quiz.questions.entries()) {
-        console.log(recap(question, answers[index]))
+    for (const [index, prompt] of quiz.prompts.entries()) {
+        console.log(recap(prompt, submissions[index]))
     }
 
-    game.finish()
-    const result = game.result()
+    const result = await call<{
+        title: string
+        description: string
+        reasons: string[]
+    }>('/session/result', {
+        headers: { 'x-session-id': sessionId },
+    })
 
     console.log(`\nYou are: ${result.title}`)
     console.log(result.description)
 
     console.log('\nYou got this because:')
 
-    const reasons = game.explain()
-    for (const reason of reasons) {
+    for (const reason of result.reasons) {
         console.log(`— ${reason}`)
     }
+}
+
+function call(path: string, init?: RequestInit): Promise<void>
+function call<CallResponse>(path: string, init?: RequestInit): Promise<CallResponse>
+
+async function call<CallResponse>(path: string, init?: RequestInit): Promise<CallResponse | void> {
+    let response: Response
+
+    try {
+        response = await fetch(`${BASE_URL}${path}`, init)
+    } catch {
+        throw new Error(`Cannot reach the server at ${BASE_URL}`)
+    }
+
+    if (!response.ok) {
+        const body: unknown = await response.json()
+
+        if (
+            typeof body === 'object' &&
+            body !== null &&
+            'error' in body &&
+            typeof body.error === 'string'
+        ) {
+            throw new Error(body.error)
+        }
+
+        throw new Error(`The server answered ${response.status}`)
+    }
+
+    if (response.status === 204) {
+        return
+    }
+
+    return response.json() as CallResponse
 }

@@ -2,7 +2,7 @@ import { QuestionKind, type Answer, type Question, type Submission } from '@plat
 
 export function toAnswer(question: Question, submission: Submission): Answer | undefined {
     if (question.kind === QuestionKind.choice) {
-        if (submission.kind !== 'choice') {
+        if (submission.kind !== QuestionKind.choice) {
             return undefined
         }
 
@@ -17,7 +17,7 @@ export function toAnswer(question: Question, submission: Submission): Answer | u
 
     if (question.kind === QuestionKind.scale) {
         if (
-            submission.kind !== 'scale' ||
+            submission.kind !== QuestionKind.scale ||
             !Number.isInteger(submission.value) ||
             submission.value < 0 ||
             submission.value > 2
@@ -29,7 +29,7 @@ export function toAnswer(question: Question, submission: Submission): Answer | u
     }
 
     if (question.kind === QuestionKind.yesno) {
-        if (submission.kind !== 'yesno' || typeof submission.value !== 'boolean') {
+        if (submission.kind !== QuestionKind.yesno || typeof submission.value !== 'boolean') {
             return undefined
         }
 
