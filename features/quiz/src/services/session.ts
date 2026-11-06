@@ -1,5 +1,5 @@
 import type { Submission } from '../game-core/index.ts'
-import { call, request } from './request.ts'
+import { request } from './request.ts'
 import type { StartSessionResponse, ResultResponse } from './types.ts'
 
 export async function startSession(quiz: string): Promise<string> {
@@ -13,7 +13,7 @@ export async function startSession(quiz: string): Promise<string> {
 }
 
 export async function sendAnswer(id: string, submission: Submission): Promise<void> {
-    await call<Submission>({
+    await request({
         path: '/session/answer',
         method: 'POST',
         headers: { 'x-session-id': id },

@@ -70,7 +70,7 @@ const sessionPlugin: FastifyPluginAsync = async (fastify) => {
             session.game.record(question, answer)
             session.answered += 1
 
-            return reply.code(204).send()
+            return reply.code(200).send({})
         },
     )
 

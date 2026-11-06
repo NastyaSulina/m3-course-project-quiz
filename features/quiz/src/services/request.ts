@@ -7,21 +7,12 @@ interface RequestOptions<Body = never> {
     headers?: Record<string, string>
 }
 
-export async function request<Reply extends object = object, Body = never>(
-    options: RequestOptions<Body>,
-): Promise<Reply> {
-    const response = await call(options)
-    const result: unknown = await response.json()
-
-    return result as Reply
-}
-
-export async function call<Body = never>({
+export async function request<Reply extends object = object, Body = never>({
     path,
     method = 'GET',
     body,
     headers = {},
-}: RequestOptions<Body>): Promise<Response> {
+}: RequestOptions<Body>): Promise<Reply> {
     let response: Response
 
     try {
@@ -52,5 +43,7 @@ export async function call<Body = never>({
         throw new Error(`The server answered ${response.status}`)
     }
 
-    return response
+    const result: unknown = await response.json()
+
+    return result as Reply
 }
