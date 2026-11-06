@@ -11,3 +11,4 @@ catalog:
 
 allowBuilds:
   nx: true
+  esbuild: true
