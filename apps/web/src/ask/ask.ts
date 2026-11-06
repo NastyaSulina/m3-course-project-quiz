@@ -2,8 +2,15 @@ import type { Prompt, Submission } from '@platform/quiz/game-core'
 
 import { optionsFor } from './options.ts'
 
-export default function ask(app: HTMLElement, prompt: Prompt): Promise<Submission> {
+export default function ask(
+    app: HTMLElement,
+    prompt: Prompt,
+    progress: string,
+): Promise<Submission> {
     const options = optionsFor(prompt)
+
+    const progressLabel = document.createElement('p')
+    progressLabel.textContent = progress
 
     const heading = document.createElement('h2')
     const list = document.createElement('ul')
@@ -21,7 +28,7 @@ export default function ask(app: HTMLElement, prompt: Prompt): Promise<Submissio
         list.append(item)
     }
 
-    app.replaceChildren(heading, list)
+    app.replaceChildren(progressLabel, heading, list)
 
     if (prompt.hint) {
         const hint = document.createElement('p')

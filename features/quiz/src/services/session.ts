@@ -1,6 +1,6 @@
 import type { Submission } from '../game-core/index.ts'
 import { request } from './request.ts'
-import type { StartSessionResponse, ResultResponse } from './types.ts'
+import type { StartSessionResponse, ResultResponse, ProgressResponse } from './types.ts'
 
 export async function startSession(quiz: string): Promise<string> {
     const { session_id } = await request<StartSessionResponse, { quiz: string }>({
@@ -30,4 +30,11 @@ export async function getResult(id: string): Promise<ResultResponse> {
     })
 
     return result
+}
+
+export async function getProgress(id: string): Promise<ProgressResponse> {
+    return request<ProgressResponse>({
+        path: '/session',
+        headers: { 'x-session-id': id },
+    })
 }
