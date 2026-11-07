@@ -5,6 +5,15 @@
     "lint": {
       "cache": true,
       "dependsOn": ["^lint"]
+    },
+    "lint-typecheck": {
+      "cache": true
+    },
+    "lint-eslint": {
+      "cache": true
+    },
+    "lint-prettier": {
+      "cache": true
     }
   }
 }
