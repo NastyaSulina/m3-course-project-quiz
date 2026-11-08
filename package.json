@@ -15,6 +15,7 @@
     "dev:server": "pnpm --filter @platform/api dev",
     "dev:web": "pnpm --filter @platform/web dev",
     "build:web": "pnpm --filter @platform/web build",
+    "preview:web": "pnpm --filter @platform/web preview",
     "lint": "nx run-many -t lint",
     "lint-typecheck": "nx run-many -t lint-typecheck",
     "lint-eslint": "nx run-many -t lint-eslint",
