@@ -1,4 +1,4 @@
-import { QuestionKind, type Prompt } from './types.ts'
+import { type Prompt, QuestionKind } from './types.ts'
 
 export function outline(questions: Prompt[]): string {
     const lines: string[] = []

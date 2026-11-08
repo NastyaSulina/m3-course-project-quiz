@@ -1,10 +1,10 @@
 import {
-    award,
-    recap,
     type Answer,
     type Award,
+    award,
     type Outcome,
     type Question,
+    recap,
 } from '../game-core/index.ts'
 
 enum GameStatus {

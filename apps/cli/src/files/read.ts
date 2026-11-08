@@ -1,10 +1,11 @@
+import { readFile } from 'node:fs/promises'
+
 import {
     loadSavedGame,
     loadSettings,
     type SavedGame,
     type Settings,
 } from '@platform/quiz/game-core'
-import { readFile } from 'node:fs/promises'
 
 export async function readSettings(file: string): Promise<Settings> {
     let text: string

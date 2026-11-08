@@ -1,4 +1,4 @@
-import { QuestionKind, type Answer, type Question, type Submission } from '@platform/quiz/game-core'
+import { type Answer, type Question, QuestionKind, type Submission } from '@platform/quiz/game-core'
 
 export function toAnswer(question: Question, submission: Submission): Answer | undefined {
     if (question.kind === QuestionKind.choice) {

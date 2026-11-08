@@ -1,4 +1,4 @@
-import { QuestionKind, type Prompt, type Submission } from '@platform/quiz/game-core'
+import { type Prompt, QuestionKind, type Submission } from '@platform/quiz/game-core'
 
 export interface Option {
     label: string

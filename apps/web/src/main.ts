@@ -1,4 +1,4 @@
-import { getQuiz, getProgress, getResult, sendAnswer, startSession } from '@platform/quiz/services'
+import { getProgress, getQuiz, getResult, sendAnswer, startSession } from '@platform/quiz/services'
 
 import ask from './ask/index.ts'
 import show from './show/index.ts'

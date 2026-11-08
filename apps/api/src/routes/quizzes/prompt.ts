@@ -1,4 +1,4 @@
-import { QuestionKind, type Prompt, type Question } from '@platform/quiz/game-core'
+import { type Prompt, type Question, QuestionKind } from '@platform/quiz/game-core'
 
 export function toPrompt(question: Question): Prompt {
     if (question.kind === QuestionKind.choice) {

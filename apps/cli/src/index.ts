@@ -1,4 +1,5 @@
 import { program } from 'commander'
+
 import play from './commands/play/index.ts'
 import replay from './commands/replay/index.ts'
 

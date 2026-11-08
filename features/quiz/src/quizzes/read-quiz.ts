@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
+
 import { type Quiz } from '../game-core/index.ts'
 import { loadQuiz } from './load-quiz.ts'
 

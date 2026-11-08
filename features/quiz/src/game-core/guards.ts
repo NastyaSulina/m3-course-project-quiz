@@ -1,10 +1,10 @@
 import {
-    QuestionKind,
     type Answer,
     type Choice,
     type Outcome,
     type PromptChoice,
     type Question,
+    QuestionKind,
     type Quiz,
     type SavedGame,
     type Settings,

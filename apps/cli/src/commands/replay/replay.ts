@@ -1,4 +1,4 @@
-import { outline, countKinds as kinds, recap, show } from '@platform/quiz/game-core'
+import { countKinds as kinds, outline, recap, show } from '@platform/quiz/game-core'
 import { getQuiz, getResult, sendAnswer, startSession } from '@platform/quiz/services'
 
 import { locateSavedGame, locateSettings, readSavedGame, readSettings } from '../../files/index.ts'

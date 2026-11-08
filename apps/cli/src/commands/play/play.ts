@@ -1,7 +1,8 @@
-import { outline, countKinds as kinds, recap, type Submission } from '@platform/quiz/game-core'
-import { ask } from './ask.ts'
-import { locateSettings, readSettings } from '../../files/index.ts'
+import { countKinds as kinds, outline, recap, type Submission } from '@platform/quiz/game-core'
 import { getQuiz, getResult, sendAnswer, startSession } from '@platform/quiz/services'
+
+import { locateSettings, readSettings } from '../../files/index.ts'
+import { ask } from './ask.ts'
 
 interface Options {
     name?: string

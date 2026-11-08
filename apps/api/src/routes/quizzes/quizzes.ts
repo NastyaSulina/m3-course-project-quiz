@@ -1,6 +1,8 @@
 import { type FastifyPluginAsync } from 'fastify'
-import { toPrompt } from './prompt.ts'
+
 import { findQuiz } from '#shared/quizzes'
+
+import { toPrompt } from './prompt.ts'
 
 const quizzesPlugin: FastifyPluginAsync = async (fastify) => {
     fastify.get<{

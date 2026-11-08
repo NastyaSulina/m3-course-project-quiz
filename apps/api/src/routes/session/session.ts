@@ -2,6 +2,7 @@ import type { Submission } from '@platform/quiz/game-core'
 import type { FastifyPluginAsync } from 'fastify'
 
 import { findQuiz } from '#shared/quizzes'
+
 import { toAnswer } from './answer.ts'
 import { create, findSessionById } from './storage.ts'
 

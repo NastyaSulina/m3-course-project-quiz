@@ -1,4 +1,4 @@
-import { QuestionKind, type Answer, type Question } from './types.ts'
+import { type Answer, type Question, QuestionKind } from './types.ts'
 
 export interface Award {
     outcome: string

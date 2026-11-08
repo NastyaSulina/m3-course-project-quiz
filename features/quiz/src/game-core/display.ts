@@ -1,4 +1,4 @@
-import { QuestionKind, type Prompt, type Settings, type Submission } from './types.ts'
+import { type Prompt, QuestionKind, type Settings, type Submission } from './types.ts'
 
 export function show(question: Prompt, settings: Settings): string {
     const hint = settings.hints && question.hint ? `\nHint: ${question.hint}` : ''
