@@ -19,3 +19,7 @@ export interface ProgressResponse {
     answered: number
     total: number
 }
+
+export interface ErrorResponse {
+    error: string
+}

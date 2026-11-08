@@ -1,4 +1,10 @@
-import type { Submission } from '@platform/quiz/game-core'
+import { isSubmission, type Submission } from '@platform/quiz/game-core'
+import type {
+    ErrorResponse,
+    ProgressResponse,
+    ResultResponse,
+    StartSessionResponse,
+} from '@platform/quiz/services'
 import type { FastifyPluginAsync } from 'fastify'
 
 import { findQuiz } from '#shared/quizzes'
@@ -11,11 +17,14 @@ interface SessionHeader {
 }
 
 interface StartBody {
-    quiz?: string
+    quiz: string
 }
 
 const sessionPlugin: FastifyPluginAsync = async (fastify) => {
-    fastify.post<{ Body: StartBody | undefined }>('/session', async (request, reply) => {
+    fastify.post<{
+        Body: Partial<StartBody> | undefined
+        Reply: StartSessionResponse | ErrorResponse
+    }>('/session', async (request, reply) => {
         const name = request.body?.quiz
 
         if (typeof name !== 'string' || !name.trim()) {
@@ -33,7 +42,10 @@ const sessionPlugin: FastifyPluginAsync = async (fastify) => {
         })
     })
 
-    fastify.get<{ Headers: SessionHeader }>('/session', async (request, reply) => {
+    fastify.get<{
+        Headers: SessionHeader
+        Reply: ProgressResponse | ErrorResponse
+    }>('/session', async (request, reply) => {
         const session = findSessionById(request.headers['x-session-id'])
         if (!session) {
             return reply.code(401).send({ error: 'Unknown session' })
@@ -59,7 +71,7 @@ const sessionPlugin: FastifyPluginAsync = async (fastify) => {
             }
 
             const submission = request.body
-            if (!submission || typeof submission !== 'object' || !('kind' in submission)) {
+            if (!isSubmission(submission)) {
                 return reply.code(400).send({ error: 'That does not fit the question' })
             }
 
@@ -75,7 +87,10 @@ const sessionPlugin: FastifyPluginAsync = async (fastify) => {
         },
     )
 
-    fastify.get<{ Headers: SessionHeader }>('/session/result', async (request, reply) => {
+    fastify.get<{
+        Headers: SessionHeader
+        Reply: ResultResponse | ErrorResponse
+    }>('/session/result', async (request, reply) => {
         const session = findSessionById(request.headers['x-session-id'])
         if (!session) {
             return reply.code(401).send({ error: 'Unknown session' })
@@ -88,8 +103,12 @@ const sessionPlugin: FastifyPluginAsync = async (fastify) => {
         if (!session.finished) {
             try {
                 session.game.finish()
-            } catch {
-                return reply.code(409).send({ error: 'No points have been scored' })
+            } catch (error) {
+                if (error instanceof Error && error.message === 'No points have been scored') {
+                    return reply.code(409).send({ error: error.message })
+                }
+
+                throw error
             }
 
             session.finished = true
