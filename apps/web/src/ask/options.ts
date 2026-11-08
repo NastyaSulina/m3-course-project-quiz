@@ -17,13 +17,17 @@ export function optionsFor(prompt: Prompt): Option[] {
     }
 
     if (prompt.kind === QuestionKind.scale) {
-        return [0, 1, 2].map((value) => ({
-            label: String(value),
-            submission: {
-                kind: QuestionKind.scale,
-                value,
-            },
-        }))
+        return Array.from({ length: prompt.max - prompt.min + 1 }, (_, index) => {
+            const value = prompt.min + index
+
+            return {
+                label: String(value),
+                submission: {
+                    kind: QuestionKind.scale,
+                    value,
+                },
+            }
+        })
     }
 
     if (prompt.kind === QuestionKind.yesno) {

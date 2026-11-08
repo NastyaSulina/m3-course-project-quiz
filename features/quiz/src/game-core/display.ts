@@ -14,7 +14,7 @@ export function show(question: Prompt, settings: Settings): string {
     }
 
     if (question.kind === QuestionKind.scale) {
-        return `${question.text}\n0 = ${question.low}\n2 = ${question.high}${hint}`
+        return `${question.text}\n${question.min} = ${question.min_label}\n${question.max} = ${question.max_label}${hint}`
     }
 
     throw new Error('Unknown kind')
@@ -29,8 +29,8 @@ export function recap(question: Prompt, answer: Submission): string {
         return `${question.text} You chose "${answer.picked.label}".`
     }
 
-    if (answer.kind === QuestionKind.scale) {
-        return `${question.text} You rated it ${answer.value} out of 2.`
+    if (answer.kind === QuestionKind.scale && question.kind === QuestionKind.scale) {
+        return `${question.text} You rated it ${answer.value} out of ${question.max}.`
     }
 
     if (answer.kind === QuestionKind.yesno) {

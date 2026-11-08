@@ -19,9 +19,18 @@ export async function ask(settings: Settings, question: Prompt): Promise<Submiss
 
     if (question.kind === QuestionKind.scale) {
         const value = await input({
-            message: `${message} (0 = ${question.low}, 2 = ${question.high})`,
-            validate: (text) =>
-                ['0', '1', '2'].includes(text.trim()) ? true : 'Enter a whole number from 0 to 2',
+            message: `${message} (${question.min} = ${question.min_label}, ${question.max} = ${question.max_label})`,
+            validate: (text) => {
+                const number = Number(text)
+
+                return (
+                    (text.trim() !== '' &&
+                        Number.isInteger(number) &&
+                        number >= question.min &&
+                        number <= question.max) ||
+                    `Enter a whole number from ${question.min} to ${question.max}`
+                )
+            },
         })
 
         return { kind: QuestionKind.scale, value: Number(value) }

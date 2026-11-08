@@ -44,8 +44,10 @@ interface YesNoQuestion extends BaseQuestion {
 
 interface ScaleQuestion extends BaseQuestion {
     kind: QuestionKind.scale
-    low: string
-    high: string
+    min_label: string
+    max_label: string
+    min: number
+    max: number
     outcome: string
 }
 
@@ -79,8 +81,10 @@ interface ChoicePrompt extends BaseQuestion {
 
 interface ScalePrompt extends BaseQuestion {
     kind: QuestionKind.scale
-    low: string
-    high: string
+    min_label: string
+    max_label: string
+    min: number
+    max: number
 }
 
 interface YesNoPrompt extends BaseQuestion {

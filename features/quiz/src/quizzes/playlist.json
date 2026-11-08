@@ -90,8 +90,10 @@
         {
             "text": "How often do you buy something after seeing it on TikTok?",
             "kind": "scale",
-            "low": "never",
-            "high": "all the time",
+            "min_label": "never",
+            "max_label": "all the time",
+            "min": 0,
+            "max": 2,
             "outcome": "hit",
             "hint": "No pressure"
         },

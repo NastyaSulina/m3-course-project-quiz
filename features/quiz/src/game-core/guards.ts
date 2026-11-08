@@ -57,13 +57,7 @@ export function isAnswer(value: unknown): value is Answer {
     }
 
     if (value.kind === QuestionKind.scale) {
-        return (
-            'value' in value &&
-            typeof value.value === 'number' &&
-            Number.isInteger(value.value) &&
-            value.value >= 0 &&
-            value.value <= 2
-        )
+        return 'value' in value && typeof value.value === 'number' && Number.isInteger(value.value)
     }
 
     if (value.kind === QuestionKind.yesno) {
@@ -167,14 +161,27 @@ function isQuestion(value: unknown): value is Question {
     }
 
     if (value.kind === 'scale') {
-        return (
-            'low' in value &&
-            typeof value.low === 'string' &&
-            'high' in value &&
-            typeof value.high === 'string' &&
-            'outcome' in value &&
-            typeof value.outcome === 'string'
-        )
+        if (!(
+            'min' in value &&
+            'max' in value &&
+            'min_label' in value &&
+            'max_label' in value &&
+            'outcome' in value
+        ))
+            return false
+
+        const { min, max, min_label, max_label, outcome } = value
+
+        const validLabels = typeof min_label === 'string' && typeof max_label === 'string'
+        const validRange =
+            typeof min === 'number' &&
+            typeof max === 'number' &&
+            Number.isInteger(min) &&
+            Number.isInteger(max) &&
+            min >= 0 &&
+            min <= max
+
+        return validLabels && validRange && typeof outcome === 'string'
     }
 
     if (value.kind === 'yesno') {
@@ -203,13 +210,7 @@ export function isSubmission(value: unknown): value is Submission {
     }
 
     if (value.kind === QuestionKind.scale) {
-        return (
-            'value' in value &&
-            typeof value.value === 'number' &&
-            Number.isInteger(value.value) &&
-            value.value >= 0 &&
-            value.value <= 2
-        )
+        return 'value' in value && typeof value.value === 'number' && Number.isInteger(value.value)
     }
 
     if (value.kind === QuestionKind.yesno) {

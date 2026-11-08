@@ -19,8 +19,8 @@ export function toAnswer(question: Question, submission: Submission): Answer | u
         if (
             submission.kind !== QuestionKind.scale ||
             !Number.isInteger(submission.value) ||
-            submission.value < 0 ||
-            submission.value > 2
+            submission.value < question.min ||
+            submission.value > question.max
         ) {
             return undefined
         }
