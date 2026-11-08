@@ -57,35 +57,41 @@ const sessionPlugin: FastifyPluginAsync = async (fastify) => {
         }
     })
 
-    fastify.post<{ Body: Submission | undefined; Headers: SessionHeader }>(
-        '/session/answer',
-        async (request, reply) => {
-            const session = findSessionById(request.headers['x-session-id'])
-            if (!session) {
-                return reply.code(401).send({ error: 'Unknown session' })
-            }
+    fastify.post<{
+        Body: Submission | undefined
+        Headers: SessionHeader
+        Reply: {
+            200: Record<string, never>
+            400: ErrorResponse
+            401: ErrorResponse
+            409: ErrorResponse
+        }
+    }>('/session/answer', async (request, reply) => {
+        const session = findSessionById(request.headers['x-session-id'])
+        if (!session) {
+            return reply.code(401).send({ error: 'Unknown session' })
+        }
 
-            const question = session.quiz.questions[session.answered]
-            if (!question) {
-                return reply.code(409).send({ error: 'Every question has an answer' })
-            }
+        const question = session.quiz.questions[session.answered]
+        if (!question) {
+            return reply.code(409).send({ error: 'Every question has an answer' })
+        }
 
-            const submission = request.body
-            if (!isSubmission(submission)) {
-                return reply.code(400).send({ error: 'That does not fit the question' })
-            }
+        const submission = request.body
+        if (!isSubmission(submission)) {
+            return reply.code(400).send({ error: 'That does not fit the question' })
+        }
 
-            const answer = toAnswer(question, submission)
-            if (!answer) {
-                return reply.code(400).send({ error: 'That does not fit the question' })
-            }
+        const answer = toAnswer(question, submission)
+        if (!answer) {
+            return reply.code(400).send({ error: 'That does not fit the question' })
+        }
 
-            session.game.record(question, answer)
-            session.answered += 1
+        session.game.record(question, answer)
+        session.answered += 1
 
-            return reply.code(200).send({})
-        },
-    )
+        return reply.code(200).send({})
+    })
 
     fastify.get<{
         Headers: SessionHeader
