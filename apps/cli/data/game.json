@@ -21,6 +21,16 @@
             "picked": {
                 "label": "only if the camera is better"
             }
-        }
+        },
+        { "kind": "yesno", "value": true },
+        { "kind": "yesno", "value": true },
+        {
+            "kind": "choice",
+            "picked": {
+                "label": "the inside of an old bookshop"
+            }
+        },
+        { "kind": "scale", "value": 1 },
+        { "kind": "yesno", "value": true }
     ]
 }

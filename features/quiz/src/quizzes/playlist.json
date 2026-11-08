@@ -127,6 +127,56 @@
                     "points": 2
                 }
             ]
+        },
+        {
+            "text": "Does an empty swimming pool look a little haunted?",
+            "kind": "yesno",
+            "outcome": "underground"
+        },
+        {
+            "text": "Can a slightly chipped plate still be the prettiest one in the kitchen?",
+            "kind": "yesno",
+            "outcome": "comfort"
+        },
+        {
+            "text": "Which oddly specific smell would you keep forever?",
+            "kind": "choice",
+            "choices": [
+                {
+                    "label": "the inside of an old bookshop",
+                    "outcome": "underground",
+                    "points": 2
+                },
+                {
+                    "label": "fresh bedsheets on a Sunday morning",
+                    "outcome": "comfort",
+                    "points": 2
+                },
+                {
+                    "label": "sunscreen and warm pavement",
+                    "outcome": "hit",
+                    "points": 2
+                },
+                {
+                    "label": "the air just before a summer thunderstorm",
+                    "outcome": "party",
+                    "points": 2
+                }
+            ]
+        },
+        {
+            "text": "A new Nolan movie is coming out. When are you watching it?",
+            "kind": "scale",
+            "min_label": "never",
+            "max_label": "at the premiere",
+            "min": 0,
+            "max": 2,
+            "outcome": "hit"
+        },
+        {
+            "text": "Would you go on a hitchhiking trip?",
+            "kind": "yesno",
+            "outcome": "party"
         }
     ]
 }
