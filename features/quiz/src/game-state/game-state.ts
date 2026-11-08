@@ -20,7 +20,7 @@ class GameError extends Error {
     }
 }
 
-export class GameState {
+class GameState {
     private scores: Record<string, number> = {}
     private reasons: Record<string, string[]> = {}
 

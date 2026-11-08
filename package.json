@@ -20,9 +20,11 @@
     "lint-typecheck": "nx run-many -t lint-typecheck",
     "lint-eslint": "nx run-many -t lint-eslint",
     "lint-prettier": "nx run-many -t lint-prettier",
-    "clean": "nx run-many -t clean && nx reset"
+    "clean": "nx run-many -t clean && nx reset",
+    "knip": "knip"
   },
   "devDependencies": {
+    "knip": "^6.44.2",
     "nx": "^24.0.1"
   }
 }
